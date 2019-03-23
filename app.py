@@ -14,7 +14,9 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/tasks')
 def show_tasks():
-    pass
+    tasks = session.query(Task).all()
+    return render_template('task.html', tasks=tasks)
+
 
 
 
