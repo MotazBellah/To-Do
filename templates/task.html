@@ -14,7 +14,10 @@
         <h1>Tasks:</h1>
         <ul>
             {% for i in tasks %}
-                <li>{{ i.name }}</li>
+                <li>{{ i.name }}
+                    <a href="#">edit</a>
+                    <a href="#">Delete</a>
+                </li>
             {% endfor %}
         </ul>
 
