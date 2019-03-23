@@ -1,17 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from database_setup import Base, Task
 
+engine = create_engine('sqlite:///todo.db')
+Base.metadata.create_all(engine)
 
-
-set_key('b42f313de752b4082729b83599e87b3f')
-
-engine = create_engine('sqlite:///catalogmovi.db')
-Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 app = Flask(__name__)
+
+@app.route('/')
+@app.route('/tasks')
+def show_tasks():
+    pass
 
 
 
