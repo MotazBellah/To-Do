@@ -17,6 +17,15 @@ def show_tasks():
     tasks = session.query(Task).all()
     return render_template('task.html', tasks=tasks)
 
+@app.route('/addTask', methods=['POST'])
+def addTask():
+    if request.form['name']:
+        newTask = Task(name=request.form['name'])
+        session.add(newTask)
+        session.commit()
+        
+    return redirect(url_for('show_tasks'))
+
 
 
 

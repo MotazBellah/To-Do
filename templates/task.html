@@ -5,7 +5,13 @@
         <title></title>
     </head>
     <body>
-        <h1>To-Do List:</h1>
+        <form  action="/addTask" method="post">
+            <p>Add new Task:</p>
+                <input type="text" name="name">
+                <input type="submit" value="Add">
+        </form>
+
+        <h1>Tasks:</h1>
         <ul>
             {% for i in tasks %}
                 <li>{{ i.name }}</li>
