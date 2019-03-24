@@ -16,7 +16,7 @@
             {% for i in tasks %}
                 <li>{{ i.name }}
                     <a href="#">edit</a>
-                    <a href="#">Delete</a>
+                    <a href="{{ url_for('deleteTask', task_name=i.name)}}">Delete</a>
                     {{ i.time.replace(microsecond=0) }}
                 </li>
             {% endfor %}

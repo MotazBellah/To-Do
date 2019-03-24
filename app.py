@@ -23,8 +23,17 @@ def addTask():
         newTask = Task(name=request.form['name'])
         session.add(newTask)
         session.commit()
-        
+
     return redirect(url_for('show_tasks'))
+
+
+@app.route('/delete/<task_name>')
+def deleteTask(task_name):
+    task = session.query(Task).filter_by(name=task_name).one()
+    session.delete(task)
+    session.commit()
+    return redirect(url_for('show_tasks'))
+
 
 
 
