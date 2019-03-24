@@ -13,14 +13,38 @@
 
         <h1>Tasks:</h1>
         <ul>
+            <div class="response">
+
+            </div>
             {% for i in tasks %}
-                <li>{{ i.name }}
-                    <a href="#">edit</a>
+                <li id={{i.name.replace(' ','')}}>{{ i.name }}
+                    <a class='edit' id={{i.name.replace(' ','') }} href="#">edit</a>
                     <a href="{{ url_for('deleteTask', task_name=i.name)}}">Delete</a>
                     {{ i.time.replace(microsecond=0) }}
                 </li>
+
             {% endfor %}
         </ul>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(this).click(function(e){
+            alert(e.target.id)
+            $form = $("<form></form>");
+            $form.append('<input type="button" value="button">');
+            $('#'+ e.target.id).append($form);
+        });
+        //$('.edit').click(function(){
+        //    $.ajax({
+        //        url: "/edit",
+        //        type: "POST",
+        //        success: function(resp){
+        //            $('.response').append(resp.data)
+        //        }
 
+        //    })
+        //});
+
+
+    </script>
     </body>
 </html>

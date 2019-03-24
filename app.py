@@ -35,6 +35,9 @@ def deleteTask(task_name):
     return redirect(url_for('show_tasks'))
 
 
+@app.route('/edit', methods=['POST'])
+def editTask():
+    return jsonify({'data': render_template('response.html')})
 
 
 
