@@ -17,7 +17,7 @@
                 <li>{{ i.name }}
                     <a href="#">edit</a>
                     <a href="#">Delete</a>
-                    {{ i.time }}
+                    {{ i.time.replace(microsecond=0) }}
                 </li>
             {% endfor %}
         </ul>
