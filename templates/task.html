@@ -38,10 +38,29 @@
                 const nameActions = {
                     edit: () => {
                         const span = li.firstElementChild;
-                        const input = document.createElement('input');
-                        input.type = 'text';
-                        input.value = span.textContent;
-                        li.insertBefore(input, span);
+                        // const input = document.createElement('input');
+                        // input.type = 'text';
+                        // input.value = span.textContent;
+                        // li.insertBefore(input, span);
+                        // li.removeChild(span);
+
+                        const f = document.createElement("form");
+                        // f.setAttribute('method',"post");
+                        f.setAttribute('action',"/tasks");
+
+                        const i = document.createElement("input"); //input element, text
+                        i.setAttribute('type',"text");
+                        i.setAttribute('name',"name");
+                        i.value = span.textContent;
+
+                        const s = document.createElement("input"); //input element, Submit button
+                        s.setAttribute('type',"submit");
+                        s.setAttribute('value',"Submit");
+
+                        f.appendChild(i);
+                        f.appendChild(s);
+
+                        li.insertBefore(f, span);
                         li.removeChild(span);
                         anchor.innerHTML = 'save';
                     },
@@ -51,13 +70,14 @@
                         span.textContent = input.value;
                         li.insertBefore(span, input);
                         li.removeChild(input);
-                        anchor.innerHTML = 'edit';  
+                        anchor.innerHTML = 'edit';
                     }
                 };
 
                 nameActions[action]();
             }
         });
+
         // $(this).click(function(e){
         //     if (e.target.tagName.toLowerCase() === 'a'){
         //     alert(e.target.id)
