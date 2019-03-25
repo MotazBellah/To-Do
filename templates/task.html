@@ -12,12 +12,12 @@
         </form>
 
         <h1>Tasks:</h1>
-        <ul>
-            <div class="response">
+        <ul id='taskList'>
+            <!-- <div class="response">
 
-            </div>
+            </div> -->
             {% for i in tasks %}
-                <li id={{i.name.replace(' ','')}}>{{ i.name }}
+                <li id={{i.name.replace(' ','')}}><span>{{ i.name }}</span>
                     <a class='edit' id={{i.name.replace(' ','') }} href="#">edit</a>
                     <a href="{{ url_for('deleteTask', task_name=i.name)}}">Delete</a>
                     {{ i.time.replace(microsecond=0) }}
@@ -27,12 +27,45 @@
         </ul>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
-        $(this).click(function(e){
-            alert(e.target.id)
-            $form = $("<form></form>");
-            $form.append('<input type="button" value="button">');
-            $('#'+ e.target.id).append($form);
+        const ul = document.getElementById('taskList');
+        ul.addEventListener('click', (e) =>{
+            if (e.target.tagName.toLowerCase() === 'a'){
+                // alert('h')}
+                const anchor = e.target;
+                const li = anchor.parentNode;
+                const ul = li.parentNode;
+                const action = anchor.innerHTML;
+                const nameActions = {
+                    edit: () => {
+                        const span = li.firstElementChild;
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = span.textContent;
+                        li.insertBefore(input, span);
+                        li.removeChild(span);
+                        anchor.innerHTML = 'save';
+                    },
+                    save: () => {
+                        const input = li.firstElementChild;
+                        const span = document.createElement('span');
+                        span.textContent = input.value;
+                        li.insertBefore(span, input);
+                        li.removeChild(input);
+                        anchor.innerHTML = 'edit';  
+                    }
+                };
+
+                nameActions[action]();
+            }
         });
+        // $(this).click(function(e){
+        //     if (e.target.tagName.toLowerCase() === 'a'){
+        //     alert(e.target.id)
+        //     $form = $("<form></form>");
+        //     $form.append('<input type="button" value="button">');
+        //     $('#'+ e.target.id).append($form);
+        //     }
+        // });
         //$('.edit').click(function(){
         //    $.ajax({
         //        url: "/edit",
