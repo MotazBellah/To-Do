@@ -28,13 +28,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
         const ul = document.getElementById('taskList');
+        // In case of click in UL, use the DOM traversal, to change the front-end side dynamically
+        // By creating a form to submit the updating value to DB
+        // Using Ajax request to update the data without refresh the page
+
         ul.addEventListener('click', (e) =>{
             if (e.target.tagName.toLowerCase() === 'a'){
                 const anchor = e.target;
                 const li = anchor.parentNode;
                 const ul = li.parentNode;
-                const action = anchor.innerHTML;
+                const action = anchor.innerHTML; // edit to update the value, cancel to return back to the main route
                 const nameActions = {
+                    // create two actions
                     edit: () => {
                         const span = li.firstElementChild;
                         const f = document.createElement("form");
@@ -51,8 +56,8 @@
 
                         $(s).click(function(){
 
-                            var id = span.textContent;
-                            var name = i.value;
+                            var id = span.textContent; // get the id then send it to flask app to filter the db
+                            var name = i.value; // get the value to update later the db
 
                             req = $.ajax({
                                 url: '/edit',
@@ -60,8 +65,7 @@
                                 async: false,
                                 data: {name: name, id:id},
                                 success: function(data) {
-                                    console.log(data.name);
-                                    span.innerHTML = data.name;
+                                    span.innerHTML = data.name; // change the page without refresh
                                 },
                                 error: function () {
                                     alert('Sorry, something went wrong :(');
@@ -75,38 +79,16 @@
 
                         li.insertBefore(f, span);
                         li.removeChild(span);
-                        anchor.innerHTML = 'Cancel';
+                        anchor.innerHTML = 'Cancel'; // change the link to cancel 
                     },
                     Cancel: () => {
                         window.location.href = '/tasks' // Return back to `tasks` route
                     }
                 };
 
-                nameActions[action]();
+                nameActions[action](); // call the function
             }
         });
-
-
-
-        // $(this).click(function(e){
-        //     if (e.target.tagName.toLowerCase() === 'a'){
-        //     alert(e.target.id)
-        //     $form = $("<form></form>");
-        //     $form.append('<input type="button" value="button">');
-        //     $('#'+ e.target.id).append($form);
-        //     }
-        // });
-        //$('.edit').click(function(){
-        //    $.ajax({
-        //        url: "/edit",
-        //        type: "POST",
-        //        success: function(resp){
-        //            $('.response').append(resp.data)
-        //        }
-
-        //    })
-        //});
-
 
     </script>
     </body>
