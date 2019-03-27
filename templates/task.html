@@ -78,12 +78,7 @@
                         anchor.innerHTML = 'Cancel';
                     },
                     Cancel: () => {
-                        const input = li.firstElementChild;
-                        const span = document.createElement('span');
-                        span.textContent = input.value;
-                        li.insertBefore(span, input);
-                        li.removeChild(input);
-                        anchor.innerHTML = 'edit';
+                        window.location.href = '/tasks' // Return back to `tasks` route
                     }
                 };
 
