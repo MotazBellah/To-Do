@@ -15,11 +15,12 @@
         <ul id='taskList'>
             {% for i in tasks %}
                 <li>
-                    <input type="checkbox" name="check">
+                    
                     <span>{{ i.name }}</span>
-                    <a class='edit' id={{i.name.replace(' ','') }} href="#">edit</a>
+                    <a class='edit' href="#">edit</a>
                     <a href="{{ url_for('deleteTask', task_name=i.name)}}">Delete</a>
-                    {{ i.time.replace(microsecond=0) }}
+
+                    {{ i.time }}
                 </li>
 
             {% endfor %}
