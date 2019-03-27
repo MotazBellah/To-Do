@@ -13,11 +13,10 @@
 
         <h1>Tasks:</h1>
         <ul id='taskList'>
-            <!-- <div class="response">
-
-            </div> -->
             {% for i in tasks %}
-                <li id={{i.name.replace(' ','')}}><span>{{ i.name }}</span>
+                <li>
+                    <input type="checkbox" name="check">
+                    <span>{{ i.name }}</span>
                     <a class='edit' id={{i.name.replace(' ','') }} href="#">edit</a>
                     <a href="{{ url_for('deleteTask', task_name=i.name)}}">Delete</a>
                     {{ i.time.replace(microsecond=0) }}
@@ -30,7 +29,7 @@
         const ul = document.getElementById('taskList');
         // In case of click in UL, use the DOM traversal, to change the front-end side dynamically
         // By creating a form to submit the updating value to DB
-        // Using Ajax request to update the data without refresh the page
+        // Using Ajax request to update the page without refresh the page
 
         ul.addEventListener('click', (e) =>{
             if (e.target.tagName.toLowerCase() === 'a'){
@@ -79,7 +78,7 @@
 
                         li.insertBefore(f, span);
                         li.removeChild(span);
-                        anchor.innerHTML = 'Cancel'; // change the link to cancel 
+                        anchor.innerHTML = 'Cancel'; // change the link to cancel
                     },
                     Cancel: () => {
                         window.location.href = '/tasks' // Return back to `tasks` route
