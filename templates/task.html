@@ -30,7 +30,6 @@
         const ul = document.getElementById('taskList');
         ul.addEventListener('click', (e) =>{
             if (e.target.tagName.toLowerCase() === 'a'){
-                // alert('h')}
                 const anchor = e.target;
                 const li = anchor.parentNode;
                 const ul = li.parentNode;
@@ -38,15 +37,7 @@
                 const nameActions = {
                     edit: () => {
                         const span = li.firstElementChild;
-                        // const input = document.createElement('input');
-                        // input.type = 'text';
-                        // input.value = span.textContent;
-                        // li.insertBefore(input, span);
-                        // li.removeChild(span);
-
                         const f = document.createElement("form");
-                        // f.setAttribute('method',"post");
-                        f.setAttribute('action',"/tasks");
 
                         const i = document.createElement("input"); //input element, text
                         i.setAttribute('type',"text");
@@ -56,15 +47,37 @@
                         const s = document.createElement("input"); //input element, Submit button
                         s.setAttribute('type',"submit");
                         s.setAttribute('value',"Submit");
+                        s.setAttribute('id',"update");
+
+                        $(s).click(function(){
+
+                            var id = span.textContent;
+                            var name = i.value;
+
+                            req = $.ajax({
+                                url: '/edit',
+                                type: 'POST',
+                                async: false,
+                                data: {name: name, id:id},
+                                success: function(data) {
+                                    console.log(data.name);
+                                    span.innerHTML = data.name;
+                                },
+                                error: function () {
+                                    alert('Sorry, something went wrong :(');
+                                }
+                            });
+
+                        });
 
                         f.appendChild(i);
                         f.appendChild(s);
 
                         li.insertBefore(f, span);
                         li.removeChild(span);
-                        anchor.innerHTML = 'save';
+                        anchor.innerHTML = 'Cancel';
                     },
-                    save: () => {
+                    Cancel: () => {
                         const input = li.firstElementChild;
                         const span = document.createElement('span');
                         span.textContent = input.value;
@@ -77,6 +90,8 @@
                 nameActions[action]();
             }
         });
+
+
 
         // $(this).click(function(e){
         //     if (e.target.tagName.toLowerCase() === 'a'){

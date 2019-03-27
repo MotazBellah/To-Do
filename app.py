@@ -37,7 +37,12 @@ def deleteTask(task_name):
 
 @app.route('/edit', methods=['POST'])
 def editTask():
-    return jsonify({'data': render_template('response.html')})
+    task = session.query(Task).filter_by(name=request.form['id']).first()
+    task.name = request.form['name']
+    session.add(task)
+    session.commit()
+
+    return jsonify({'result': 'success'})
 
 
 
