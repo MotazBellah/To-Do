@@ -15,7 +15,8 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/tasks')
 def show_tasks():
-    tasks = session.query(Task).all()
+    # filter_by(done=False).
+    tasks = session.query(Task).filter_by(done=False).all()
     return render_template('task.html', tasks=tasks)
 
 @app.route('/addTask', methods=['POST'])
@@ -46,7 +47,7 @@ def editTask():
     return jsonify({'result': 'success'})
 
 @app.route('/complete', methods=['POST'])
-def editTask():
+def completeTask():
     task = session.query(Task).filter_by(name=request.form['id']).first()
     task.done = True
     session.add(task)
