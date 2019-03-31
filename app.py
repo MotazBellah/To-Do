@@ -45,6 +45,15 @@ def editTask():
 
     return jsonify({'result': 'success'})
 
+@app.route('/complete', methods=['POST'])
+def editTask():
+    task = session.query(Task).filter_by(name=request.form['id']).first()
+    task.done = True
+    session.add(task)
+    session.commit()
+
+    return jsonify({'result': 'success'})
+
 
 
 
