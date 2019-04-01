@@ -15,9 +15,16 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/tasks')
 def show_tasks():
-    # filter_by(done=False).
     tasks = session.query(Task).filter_by(done=False).all()
     return render_template('task.html', tasks=tasks)
+
+
+@app.route('/completedTasks')
+def show_completed():
+    tasks = session.query(Task).filter_by(done=True).all()
+    return render_template('completed.html', tasks=tasks)
+
+
 
 @app.route('/addTask', methods=['POST'])
 def addTask():
@@ -31,7 +38,7 @@ def addTask():
 
 @app.route('/delete/<task_name>')
 def deleteTask(task_name):
-    task = session.query(Task).filter_by(name=task_name).one()
+    task = session.query(Task).filter_by(name=task_name).first()
     session.delete(task)
     session.commit()
     return redirect(url_for('show_tasks'))
@@ -45,6 +52,7 @@ def editTask():
     session.commit()
 
     return jsonify({'result': 'success'})
+
 
 @app.route('/complete', methods=['POST'])
 def completeTask():
