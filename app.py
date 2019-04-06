@@ -3,6 +3,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Task
 from time import gmtime, strftime
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField
+from wtforms.validators import InputRequired, Email, Length
 
 engine = create_engine('sqlite:///todo.db')
 Base.metadata.create_all(engine)
@@ -11,6 +14,12 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 app = Flask(__name__)
+
+
+class loginForm(FlaskForm):
+    Username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
+    password = PasswordField('password', validators=[InputRequired, length(min=8, max=80)])
+    remember = BooleanField('remember me')
 
 @app.route('/')
 @app.route('/tasks')
