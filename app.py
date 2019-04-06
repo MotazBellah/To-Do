@@ -6,6 +6,7 @@ from time import gmtime, strftime
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
+from flask_bootstrap import Bootstrap
 
 engine = create_engine('sqlite:///todo.db')
 Base.metadata.create_all(engine)
@@ -16,26 +17,12 @@ session = DBSession()
 app = Flask(__name__)
 
 
-class loginForm(FlaskForm):
-    Username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[InputRequired, length(min=8, max=80)])
-    remember = BooleanField('remember me')
-
 @app.route('/')
 @app.route('/tasks')
 def show_tasks():
     tasks = session.query(Task).filter_by(done=False).all()
     return render_template('task.html', tasks=tasks)
 
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-
-@app.route('/signup')
-def signup():
-    return render_template('signup.html')
 
 
 @app.route('/completedTasks')
