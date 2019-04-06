@@ -26,8 +26,7 @@ def login():
 
 @app.route('/signup')
 def signup():
-    tasks = session.query(Task).filter_by(done=False).all()
-    return render_template('task.html', tasks=tasks)
+    return render_template('signup.html')
 
 
 @app.route('/completedTasks')
