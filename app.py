@@ -19,6 +19,17 @@ def show_tasks():
     return render_template('task.html', tasks=tasks)
 
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/signup')
+def signup():
+    tasks = session.query(Task).filter_by(done=False).all()
+    return render_template('task.html', tasks=tasks)
+
+
 @app.route('/completedTasks')
 def show_completed():
     tasks = session.query(Task).filter_by(done=True).all()
